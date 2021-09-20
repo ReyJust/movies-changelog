@@ -1,15 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <Movies />
+    <newMovies />
+    <deleteMovies />
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import { mapGetters } from "vuex";
+import { Movies } from "./components/Movies.vue";
+import { newMovies } from "./components/NewMovies.vue";
+import { deleteMovies } from "./components/DeletedMovies.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Movies,
+    newMovies,
+    deleteMovies,
+  },
+  computed: {
+    ...mapGetters(["getMovies"]),
   },
 };
 </script>
