@@ -5,14 +5,19 @@
     </div>
     <div class="movie-list">
       <div v-for="(movie, index) in getMovies" :key="index">
-        <MovieCard :title="movie.title" />
+        <MovieCard
+          :title="movie.title"
+          :image="movie.image"
+          :year="movie.year"
+          :actors="movie.actors"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import MovieCard from "./MovieCard.vue";
 
 export default {
@@ -24,6 +29,15 @@ export default {
 
   computed: {
     ...mapGetters(["getMovies"]),
+  },
+  methods: {
+    ...mapActions(["setMovies"]),
+    callImdb() {
+      this.$store.dispatch("setMovies");
+    },
+  },
+  async mounted() {
+    this.callImdb();
   },
 };
 </script>

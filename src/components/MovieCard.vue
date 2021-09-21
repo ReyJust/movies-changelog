@@ -1,7 +1,9 @@
 <template>
   <div class="movie-card">
-    <i src="../assets/logo.png" alt="img" />
+    <img class="movie-card-image" :src="image" :alt="title" />
     <h3>{{ title }}</h3>
+    <h4>{{ year }}</h4>
+    <!-- <h5>{{ actors }}</h5> -->
   </div>
 </template>
 
@@ -9,17 +11,18 @@
 export default {
   name: "MovieCard",
   props: {
-    title: {
-      type: String,
-    },
+    image: String,
+    title: String,
+    year: Number,
+    actors: Object,
   },
 };
 </script>
 
 <style>
 .movie-card {
-  width: 250px;
-  height: 350px;
+  width: 300px;
+  height: 500px;
   margin: 10px;
   border-radius: 10px;
 
@@ -39,9 +42,9 @@ export default {
 
 .movie-card-image {
   object-fit: cover;
-  height: 100%;
+  height: 80%;
   width: 100%;
-  border-radius: 10%;
+  border-radius: 3%;
   border-bottom-left-radius: 0%;
   border-bottom-right-radius: 0%;
 }
