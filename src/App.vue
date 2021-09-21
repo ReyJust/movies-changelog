@@ -3,6 +3,11 @@
     <NewMovies />
     <Movies />
     <DeleteMovies />
+    <div class="changelog">
+      <div class="title">
+        <h3>ChangeLog</h3>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,14 +40,23 @@ export default {
   margin-top: 60px;
 }
 
+.changelog {
+  display: flex;
+  float: right;
+  width: 20%;
+  height: 500px;
+  border-radius: 10%;
+  border: 2px solid #2c3e50c5;
+}
+
 .title {
   border-bottom: 2px solid #2c3e50c5;
   font-size: 22px;
   line-height: 5px;
   text-align: left;
+  margin: 5%;
   margin-right: 30%;
   margin-left: 2%;
-  margin-top: 4%;
 }
 
 @font-face {

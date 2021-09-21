@@ -13,9 +13,4 @@ export default {
 </script>
 
 <style>
-.title {
-  border-bottom: 1px solid #2c3e50;
-  font-size: 25px;
-  line-height: 10px;
-}
 </style>
