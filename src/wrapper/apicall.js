@@ -5,7 +5,7 @@ export default async function apiCall() {
   const options = {
     method: 'GET',
     url: process.env.VUE_APP_IMDB_API,
-    params: { q: 'Deadpool' },
+    params: { q: 'Hunger Games' },
     headers: {
       'x-rapidapi-host': process.env.VUE_APP_RAPID_API_HOST,
       'x-rapidapi-key': process.env.VUE_APP_RAPID_API_KEY
@@ -14,6 +14,7 @@ export default async function apiCall() {
 
   axios.request(options).then((response) => {
     let result = response.data;
+    console.log(result)
     store.commit('setMovie', result)
   })
 }

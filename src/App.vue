@@ -1,29 +1,18 @@
 <template>
   <div>
-    <NewMovies />
-    <Movies />
-    <DeleteMovies />
-    <div class="changelog">
-      <div class="title">
-        <h3>ChangeLog</h3>
-      </div>
+    <div id="nav">
+      <router-link class="nav-item" to="/">Library</router-link>
+      <router-link class="nav-item" to="/AddMovie">Add Movie</router-link>
     </div>
+    <router-view />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import Movies from "./components/Movies.vue";
-import NewMovies from "./components/NewMovies.vue";
-import DeleteMovies from "./components/DeletedMovies.vue";
 
 export default {
   name: "App",
-  components: {
-    Movies,
-    NewMovies,
-    DeleteMovies,
-  },
   computed: {
     ...mapGetters(["getMovies"]),
   },
@@ -31,6 +20,11 @@ export default {
 </script>
 
 <style>
+.nav-item {
+  text-decoration: none;
+  color: #2c3e50;
+  border: 1px solid black;
+}
 #app {
   font-family: nunitobold;
   -webkit-font-smoothing: antialiased;

@@ -37,7 +37,7 @@ export default {
     },
   },
   async mounted() {
-    this.callImdb();
+    //this.callImdb();
   },
 };
 </script>

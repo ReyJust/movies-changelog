@@ -13,4 +13,7 @@ export default {
 </script>
 
 <style>
+.title {
+  border: 1px solid black;
+}
 </style>
