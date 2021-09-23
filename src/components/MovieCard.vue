@@ -1,6 +1,12 @@
 <template>
   <div class="movie-card">
-    <img class="movie-card-image" :src="image" :alt="title" />
+    <pulse-loader
+      v-if="!imageloaded"
+      :loading="loading"
+      :color="color"
+      :size="size"
+    ></pulse-loader>
+    <img class="movie-card-image" :src="image" :alt="title" @load="imageLoad" />
     <h3>{{ title }}</h3>
     <h4>{{ year }}</h4>
     <!-- <h5>{{ actors }}</h5> -->
@@ -8,6 +14,7 @@
 </template>
 
 <script>
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
   name: "MovieCard",
   props: {
@@ -15,6 +22,19 @@ export default {
     title: String,
     year: Number,
     actors: Object,
+  },
+  components: {
+    PulseLoader,
+  },
+  data() {
+    return {
+      imageloaded: false,
+    };
+  },
+  methods: {
+    imageLoad() {
+      this.imageloaded = true;
+    },
   },
 };
 </script>

@@ -1,20 +1,18 @@
 import axios from "axios";
-import store from '../store/store.js'
 
-export default async function apiCall() {
+export default async function apiCall(title) {
   const options = {
     method: 'GET',
     url: process.env.VUE_APP_IMDB_API,
-    params: { q: 'Hunger Games' },
+    params: { q: title },
     headers: {
       'x-rapidapi-host': process.env.VUE_APP_RAPID_API_HOST,
       'x-rapidapi-key': process.env.VUE_APP_RAPID_API_KEY
     }
   };
-
-  axios.request(options).then((response) => {
-    let result = response.data;
-    console.log(result)
-    store.commit('setMovie', result)
+  let result = {}
+  await axios.request(options).then((response) => {
+    result = response.data;
   })
+  return result
 }
