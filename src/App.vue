@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="nav">
-      <router-link class="nav-item" to="/">Library</router-link>
+      <router-link class="nav-item" to="/">Library</router-link> |
       <router-link class="nav-item" to="/AddMovie">Add Movie</router-link>
     </div>
     <router-view />
@@ -23,7 +23,6 @@ export default {
 .nav-item {
   text-decoration: none;
   color: #2c3e50;
-  border: 1px solid black;
 }
 #app {
   font-family: nunitobold;

@@ -4,21 +4,23 @@
     <label for="title">Movie Title</label>
     <input v-model="title" type="text" id="title" name="Title" />
     <button v-if="!loading" @click="callImdb(title)">Search</button>
-    <bounce-loader
-      v-else
-      :loading="loading"
-      :color="color"
-      :size="size"
-    ></bounce-loader>
-    <div v-if="getStatus" class="result">
-      <h4>Is this the film you want to add?</h4>
-      <MovieCard
-        :title="getSearchedMovie.title"
-        :image="getSearchedMovie.image"
-        :year="getSearchedMovie.year"
-        :actors="getSearchedMovie.actors"
-      />
-      <button @click="addMovie">Add Movie</button>
+    <bounce-loader v-else>
+      <!-- :loading="loading"
+      :color="'gray'"
+      :size="'50px'" -->
+    </bounce-loader>
+    <div v-if="getStatus">
+      <h4>Select your film</h4>
+      <div class="movie-list">
+        <div v-for="(movie, index) in getSearchedMovie" :key="index">
+          <SmallMovieCard
+            :title="movie.title"
+            :image="movie.image"
+            :year="movie.year"
+            @click="addMovie(movie)"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,13 +28,13 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import BounceLoader from "vue-spinner/src/BounceLoader.vue";
-import MovieCard from "./MovieCard.vue";
+import SmallMovieCard from "./SmallMovieCard.vue";
 
 export default {
   name: "AddMovie",
   components: {
     BounceLoader,
-    MovieCard,
+    SmallMovieCard,
   },
 
   data() {
@@ -52,8 +54,8 @@ export default {
       this.searchMovie(title);
     },
 
-    addMovie() {
-      this.setMovie();
+    addMovie(movie) {
+      this.setMovie(movie);
       this.$router.push({ name: "Library" });
     },
   },

@@ -1,14 +1,17 @@
 <template>
-  <div class="movie-card">
-    <pulse-loader
-      v-if="!imageloaded"
-      :loading="loading"
+  <div class="small-movie-card">
+    <pulse-loader v-if="!imageloaded">
+      <!-- :loading="loading"
       :color="'gray'"
-      :size="'50px'"
-    ></pulse-loader>
-    <img class="movie-card-image" :src="image" :alt="title" @load="imageLoad" />
-    <h3>{{ title }}</h3>
-    <h4>{{ year }}</h4>
+      :size="'50px'" -->
+    </pulse-loader>
+    <img
+      class="small-movie-card-image"
+      :src="image"
+      :alt="title"
+      @load="imageLoad"
+    />
+    <h4>{{ title }} {{ year }}</h4>
     <!-- <h5>{{ actors }}</h5> -->
   </div>
 </template>
@@ -16,7 +19,7 @@
 <script>
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
-  name: "MovieCard",
+  name: "SmallMovieCard",
   props: {
     image: String,
     title: String,
@@ -40,9 +43,9 @@ export default {
 </script>
 
 <style>
-.movie-card {
-  width: 300px;
-  height: 500px;
+.small-movie-card {
+  width: 150px;
+  height: 300px;
   margin: 10px;
   border-radius: 10px;
 
@@ -54,13 +57,13 @@ export default {
   cursor: pointer;
 }
 
-.movie-card:hover {
+.small-movie-card:hover {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.movie-card-image {
+.small-movie-card-image {
   object-fit: cover;
   height: 80%;
   width: 100%;
