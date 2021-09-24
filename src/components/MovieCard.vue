@@ -8,8 +8,11 @@
     ></pulse-loader>
     <img class="movie-card-image" :src="image" :alt="title" @load="imageLoad" />
     <h3>{{ title }}</h3>
-    <h4>{{ year }}</h4>
-    <!-- <h5>{{ actors }}</h5> -->
+    <p>{{ year }}</p>
+    <!-- <div v-for="actor in actors" :key="actor">
+      <p>{{ actor }}</p>
+    </div> -->
+    <h5>{{ actors.join(" | ") }}</h5>
   </div>
 </template>
 
@@ -62,7 +65,7 @@ export default {
 
 .movie-card-image {
   object-fit: cover;
-  height: 80%;
+  height: 70%;
   width: 100%;
   border-radius: 3%;
   border-bottom-left-radius: 0%;
