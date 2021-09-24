@@ -19,6 +19,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import MovieCard from "./MovieCard.vue";
+import { dbCall } from "../wrapper/dbcall.js";
 
 export default {
   name: "Movies",
@@ -37,7 +38,7 @@ export default {
     },
   },
   async mounted() {
-    //this.callImdb();
+    await this.dbCall();
   },
 };
 </script>

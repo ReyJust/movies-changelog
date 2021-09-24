@@ -29,7 +29,8 @@ export default new Vuex.Store({
         "Owen Wilson",
         "Bonnie Hunt",
         "Paul Newman"
-      ]
+      ],
+      "added_dt": ""
     }],
     newMovies: [{}],
     deletedMovies: [{}],

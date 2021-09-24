@@ -1,0 +1,11 @@
+type Movies {
+   title: String!
+   image: String!
+   year: Int
+   synopsis: String!
+   added_dt: Date!
+}
+
+type Query {
+   allMovies: [Movies!]
+}
