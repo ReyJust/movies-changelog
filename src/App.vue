@@ -13,6 +13,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "App",
+  components: {
+    // Auth,
+  },
+
   computed: {
     ...mapGetters(["getMovies"]),
   },

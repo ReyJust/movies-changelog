@@ -38,7 +38,7 @@ export default {
     },
   },
   async mounted() {
-    await this.dbCall();
+    //await this.dbCall();
   },
 };
 </script>
