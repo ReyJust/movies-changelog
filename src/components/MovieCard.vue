@@ -12,7 +12,7 @@
     <!-- <div v-for="actor in actors" :key="actor">
       <p>{{ actor }}</p>
     </div> -->
-    <h5>{{ actors.join(" | ") }}</h5>
+    <!-- <h5>{{ actors.join(" | ") }}</h5> -->
   </div>
 </template>
 

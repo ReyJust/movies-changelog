@@ -3,13 +3,12 @@
     <div class="title">
       <h2>Movies</h2>
     </div>
-    <div class="movie-list">
+    <div v-if="!getStatus" class="movie-list">
       <div v-for="(movie, index) in getMovies" :key="index">
         <MovieCard
           :title="movie.title"
           :image="movie.image"
           :year="movie.year"
-          :actors="movie.actors"
         />
       </div>
     </div>
@@ -19,7 +18,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import MovieCard from "./MovieCard.vue";
-import { dbCall } from "../wrapper/dbcall.js";
+// import { dbCall } from "../wrapper/dbcall.js";
 
 export default {
   name: "Movies",
@@ -27,17 +26,24 @@ export default {
   components: {
     MovieCard,
   },
+  data() {
+    return {};
+  },
 
   computed: {
-    ...mapGetters(["getMovies"]),
+    ...mapGetters(["getMovies", "getStatus"]),
   },
   methods: {
-    ...mapActions(["setMovies"]),
-    callImdb() {
-      this.$store.dispatch("setMovies");
+    ...mapActions(["fetchMovies"]),
+    // callImdb() {
+    //   this.$store.dispatch("setMovies");
+    // },
+    fetchMovies() {
+      this.$store.dispatch("fetchMovies");
     },
   },
   async mounted() {
+    this.fetchMovies();
     //await this.dbCall();
   },
 };

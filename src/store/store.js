@@ -1,52 +1,44 @@
 import Vuex from 'vuex'
 import apicall from '../wrapper/apicall'
+import { supabase } from "../supabase";
 
 export default new Vuex.Store({
-  state: {
-    status: {
-      searchedMovie: {
-        isLoading: false,
+  namespaced: true,
+  state() {
+    return {
+      status: {
+        searchedMovie: {
+          isLoading: false,
+        },
+        movies: {
+          isLoading: true,
+        }
       },
-    },
-    searchedMovie: [],
-    movies: [{
-      "image": "https://m.media-amazon.com/images/M/MV5BMjA4NDg3NzYxMF5BMl5BanBnXkFtZTcwNTgyNzkyNw@@._V1_.jpg",
-      "title": "The Hunger Games",
-      "year": 2012,
-      "synopsis": "synopsis",
-      "actors": [
-        "Jennifer Lawrence",
-        "Josh Hutcherson",
-        "Liam Hemsworth"
-      ],
-      "added_dt": ""
-    },
-    {
-      "image": "https://m.media-amazon.com/images/M/MV5BMTg5NzY0MzA2MV5BMl5BanBnXkFtZTYwNDc3NTc2._V1_.jpg",
-      "title": "Cars", "year": 2006,
-      "synopsis": "synopsis",
-      "actors": [
-        "Owen Wilson",
-        "Bonnie Hunt",
-        "Paul Newman"
-      ],
-      "added_dt": ""
-    }],
-    newMovies: [{}],
-    deletedMovies: [{}],
+      searchedMovie: [],
+      movies: [],
+      newMovies: [{}],
+      deletedMovies: [{}],
+    }
   },
   getters: {
     getMovies: (state) => state.movies,
+
     getSearchedMovie: (state) => state.searchedMovie,
-    getStatus: (state) => state.status.searchedMovie.isLoading,
+    getStatus: (state) => state.status.movies.isLoading,
   },
   mutations: {
+    //global
     setStatus(state, status) {
-      state.status.searchedMovie.isLoading = status
+      state.status.movies.isLoading = status
     },
+
     setMovie(state, movie) {
-      state.movies.push(movie)
       state.searchedMovie = []
+      state.movies = []
+    },
+    resetMovie(state) {
+      state.searchedMovie = []
+      state.movies = []
     },
     setSearchMovie(state, response) {
       let movies = []
@@ -75,16 +67,37 @@ export default new Vuex.Store({
       }
       state.searchedMovie = movies
     },
+    //Library
+    setMovieList(state, movies) {
+      for (let movie in movies) {
+        state.movies.push(movies[movie])
+      }
+    },
   },
   actions: {
+    //Library
+    async fetchMovies({ commit }) {
+      const { data: movies, error } = await supabase
+        .from("Movies")
+        .select("*")
+        .limit(20);
+      commit('setMovieList', movies)
+      commit('setStatus', false)
+    },
+
     async searchMovie({ commit }, title) {
       const response = await apicall(title)
       commit('setSearchMovie', response)
       commit("setStatus", true);
     },
-    setMovie({ commit }, movie) {
-      commit('setMovie', movie)
+    async setMovieInDb({ commit }, movie) {
+      console.log(movie)
+      const { data: movies, error } = await supabase
+        .from("Movies")
+        .insert(movie)
+
+      commit('resetMovie')
       commit('setStatus', false)
-    }
+    },
   }
 })

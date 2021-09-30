@@ -47,7 +47,7 @@ export default {
     ...mapGetters(["getSearchedMovie", "getStatus"]),
   },
   methods: {
-    ...mapActions(["searchMovie", "setMovie"]),
+    ...mapActions(["searchMovie", "setMovie", "setMovieInDb"]),
 
     callImdb(title) {
       this.loading = true;
@@ -55,7 +55,7 @@ export default {
     },
 
     addMovie(movie) {
-      this.setMovie(movie);
+      this.setMovieInDb(movie);
       this.$router.push({ name: "Library" });
     },
   },
