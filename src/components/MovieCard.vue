@@ -1,5 +1,6 @@
 <template>
-  <div class="movie-card">
+  <div class="movie-card" @click="deleteMovie(id)">
+    {{ id }}
     <pulse-loader
       v-if="!imageloaded"
       :loading="loading"
@@ -21,6 +22,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 export default {
   name: "MovieCard",
   props: {
+    id: Number,
     image: String,
     title: String,
     year: Number,
@@ -37,6 +39,9 @@ export default {
   methods: {
     imageLoad() {
       this.imageloaded = true;
+    },
+    deleteMovie(id) {
+      console.log(id);
     },
   },
 };

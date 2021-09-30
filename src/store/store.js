@@ -12,24 +12,32 @@ export default new Vuex.Store({
         },
         movies: {
           isLoading: true,
+        },
+        newMovies: {
+          isLoading: true,
         }
+
       },
       searchedMovie: [],
       movies: [],
-      newMovies: [{}],
+      newMovies: [],
       deletedMovies: [{}],
     }
   },
   getters: {
     getMovies: (state) => state.movies,
+    getNewMovies: (state) => state.newMovies,
 
     getSearchedMovie: (state) => state.searchedMovie,
-    getStatus: (state) => state.status.movies.isLoading,
+
+    getStatus: (state) => (item) => {
+      return state.status[item].isLoading
+    }
   },
   mutations: {
     //global
-    setStatus(state, status) {
-      state.status.movies.isLoading = status
+    setStatus(state, { item, status }) {
+      state.status[item].isLoading = status
     },
 
     setMovie(state, movie) {
@@ -69,8 +77,17 @@ export default new Vuex.Store({
     },
     //Library
     setMovieList(state, movies) {
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
       for (let movie in movies) {
-        state.movies.push(movies[movie])
+        movies[movie].added_dt = new Date(movies[movie].added_dt)
+
+        if (movies[movie].added_dt > oneMonthAgo) {
+          state.newMovies.push(movies[movie])
+        } else {
+          state.movies.push(movies[movie])
+        }
       }
     },
   },
@@ -80,9 +97,11 @@ export default new Vuex.Store({
       const { data: movies, error } = await supabase
         .from("Movies")
         .select("*")
+        .order('added_dt', { ascending: true })
         .limit(20);
       commit('setMovieList', movies)
-      commit('setStatus', false)
+      commit('setStatus', { item: 'movies', status: false })
+      commit('setStatus', { item: 'newMovies', status: false })
     },
 
     async searchMovie({ commit }, title) {
