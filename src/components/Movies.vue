@@ -11,7 +11,8 @@
           :year="movie.year"
           :actors="movie.actors"
           :synopsis="movie.synopsis"
-          @onclick="deleteMovie(movie.movie_id)"
+          :titleType="movie.titleType"
+          @click="deleteMovie(movie.movie_id)"
         />
       </div>
     </div>
@@ -45,13 +46,17 @@ export default {
       this.$store.dispatch("fetchMovies");
     },
     deleteMovie(id) {
-      console.log(id);
-      //this.deleteMovie(id);
+      var confirmation = confirm("Do you want to delete this film?");
+      if (confirmation) {
+        this.deleteMovieDB(id);
+        alert("Deleted!");
+      } else {
+        alert("Not deleted!");
+      }
     },
   },
   async mounted() {
     this.fetchMovies();
-    //await this.dbCall();
   },
 };
 </script>

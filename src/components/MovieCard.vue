@@ -19,11 +19,12 @@
       />
       <h3>{{ title }}</h3>
       <p>{{ year }}</p>
+      <p>{{ titleType }}</p>
+      <h5>{{ actors.join(" | ") }}</h5>
     </div>
     <!-- <div v-for="actor in actors" :key="actor">
       <p>{{ actor }}</p>
-    </div>
-    <h5>{{ actors.join(" | ") }}</h5> -->
+    </div> -->
   </div>
 </template>
 
@@ -37,6 +38,7 @@ export default {
     year: Number,
     actors: Object,
     synopsis: String,
+    titleType: String,
   },
   components: {
     PulseLoader,

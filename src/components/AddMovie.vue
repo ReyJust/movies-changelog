@@ -1,16 +1,29 @@
 <template>
   <div>
-    <h1>Form</h1>
-    <label for="title">Movie Title</label>
-    <input v-model="title" type="text" id="title" name="Title" />
-    <button v-if="!loading" @click="callImdb(title)">Search</button>
-    <bounce-loader v-else>
-      <!-- :loading="loading"
-      :color="'gray'"
-      :size="'50px'" -->
-    </bounce-loader>
+    <div class="title">
+      <h2>Search By Movie Title</h2>
+    </div>
+    <div class="search">
+      <input
+        v-model="title"
+        type="text"
+        placeholder="Title"
+        id="title"
+        name="Title"
+      />
+      <button :disabled="getIsSearching" @click="callImdb(title)">
+        Search
+      </button>
+
+      <bounce-loader
+        class="loader"
+        v-if="getIsSearching"
+        :color="'gray'"
+        :size="'100px'"
+      >
+      </bounce-loader>
+    </div>
     <div v-if="getStatus">
-      <h4>Select your film</h4>
       <div class="movie-list">
         <div v-for="(movie, index) in getSearchedMovie" :key="index">
           <SmallMovieCard
@@ -40,17 +53,15 @@ export default {
   data() {
     return {
       title: "",
-      loading: false,
     };
   },
   computed: {
-    ...mapGetters(["getSearchedMovie", "getStatus"]),
+    ...mapGetters(["getSearchedMovie", "getStatus", "getIsSearching"]),
   },
   methods: {
     ...mapActions(["searchMovie", "setMovie", "setMovieInDb"]),
 
     callImdb(title) {
-      this.loading = true;
       this.searchMovie(title);
     },
 
@@ -63,4 +74,41 @@ export default {
 </script>
 
 <style>
+.search {
+  text-align: left;
+}
+input {
+  margin: 3%;
+  padding: 0;
+  width: 30%;
+  border: none;
+  border-bottom: 2px solid #2c3e50c5;
+  color: #2c3e50c5;
+  font-size: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+.loader {
+  margin-left: 50%;
+}
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5%;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  background: rgb(241, 29, 40);
+  background: linear-gradient(
+    124deg,
+    rgba(241, 29, 40, 1) 0%,
+    rgba(254, 97, 44, 1) 78%,
+    rgba(255, 161, 44, 1) 100%
+  );
+}
 </style>

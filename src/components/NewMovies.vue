@@ -11,6 +11,7 @@
           :year="movie.year"
           :actors="movie.actors"
           :synopsis="movie.synopsis"
+          :titleType="movie.titleType"
           @click="deleteMovie(movie.movie_id)"
         />
       </div>
@@ -39,8 +40,13 @@ export default {
     ...mapActions(["deleteMovieDB"]),
 
     deleteMovie(id) {
-      console.log(id);
-      this.deleteMovieDB(id);
+      var confirmation = confirm("Do you want to delete this film?");
+      if (confirmation) {
+        this.deleteMovieDB(id);
+        alert("Deleted!");
+      } else {
+        alert("Not deleted!");
+      }
     },
   },
 };

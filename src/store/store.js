@@ -6,6 +6,7 @@ export default new Vuex.Store({
   namespaced: true,
   state() {
     return {
+      isSearching: false,
       isLoading: true,
 
       searchedMovie: [],
@@ -20,14 +21,17 @@ export default new Vuex.Store({
 
     getSearchedMovie: (state) => state.searchedMovie,
 
-    getStatus: (state) => state.isLoading
+    getStatus: (state) => state.isLoading,
+    getIsSearching: (state) => state.isSearching
   },
   mutations: {
     //global
     setStatus(state, status) {
       state.isLoading = status
     },
-
+    setIsSearching(state, status) {
+      state.isSearching = status
+    },
     resetMovie(state) {
       state.searchedMovie = []
       state.movies = []
@@ -47,6 +51,7 @@ export default new Vuex.Store({
               image: (results[movie].image ? results[movie].image.url : 'placeholder'),
               title: results[movie].title,
               year: results[movie].year,
+              titleType: results[movie].titleType,
             })
             //Fill the casting
             let casting = results[movie].principals
@@ -89,9 +94,13 @@ export default new Vuex.Store({
     },
 
     async searchMovie({ commit }, title) {
+      commit('resetMovie')
+      commit('setIsSearching', true)
       const response = await apicall(title)
       commit('setSearchMovie', response)
       commit('setStatus', { item: 'movies', status: false });
+      commit('setIsSearching', false)
+
     },
     async setMovieInDb({ commit }, movie) {
       const { data: movies, error } = await supabase
