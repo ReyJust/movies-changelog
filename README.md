@@ -1,24 +1,34 @@
 # movies-changelog
+This is my small project for classifying movies inside my hdd.
 
 ## Project setup
 ```
-npm install
+npm i
 ```
-
-### Compiles and hot-reloads for development
+### Development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# Usage
+You will need:
+-Supabase account with "Movies" table created.
+-RapidApi account with access key to IMDB API.
 
-### Lints and fixes files
+INSERT credential in a fresh .env file as follow:
 ```
-npm run lint
-```
+VUE_APP_SUPABASE_URL=myURL
+VUE_APP_SUPABASE_ANON_KEY=myKEY
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+VUE_APP_IMDB_API=myAPI
+VUE_APP_RAPID_API_HOST=myHOST
+VUE_APP_RAPID_API_KEY=myKEY
+```
+This project is also deployed on a Netlify website.
+
+## TODOS
+-Add user login
+-Add search along movies
+-Add Genre to DB
+-Add filter by 'Genre' / 'Date' / 'Type'
+-Add synopsis
