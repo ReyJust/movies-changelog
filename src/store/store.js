@@ -6,18 +6,8 @@ export default new Vuex.Store({
   namespaced: true,
   state() {
     return {
-      status: {
-        searchedMovie: {
-          isLoading: false,
-        },
-        movies: {
-          isLoading: true,
-        },
-        newMovies: {
-          isLoading: true,
-        }
+      isLoading: true,
 
-      },
       searchedMovie: [],
       movies: [],
       newMovies: [],
@@ -30,23 +20,18 @@ export default new Vuex.Store({
 
     getSearchedMovie: (state) => state.searchedMovie,
 
-    getStatus: (state) => (item) => {
-      return state.status[item].isLoading
-    }
+    getStatus: (state) => state.isLoading
   },
   mutations: {
     //global
-    setStatus(state, { item, status }) {
-      state.status[item].isLoading = status
+    setStatus(state, status) {
+      state.isLoading = status
     },
 
-    setMovie(state, movie) {
-      state.searchedMovie = []
-      state.movies = []
-    },
     resetMovie(state) {
       state.searchedMovie = []
       state.movies = []
+      state.newMovies = []
     },
     setSearchMovie(state, response) {
       let movies = []
@@ -100,17 +85,15 @@ export default new Vuex.Store({
         .order('added_dt', { ascending: true })
         .limit(20);
       commit('setMovieList', movies)
-      commit('setStatus', { item: 'movies', status: false })
-      commit('setStatus', { item: 'newMovies', status: false })
+      commit('setStatus', false)
     },
 
     async searchMovie({ commit }, title) {
       const response = await apicall(title)
       commit('setSearchMovie', response)
-      commit("setStatus", true);
+      commit('setStatus', { item: 'movies', status: false });
     },
     async setMovieInDb({ commit }, movie) {
-      console.log(movie)
       const { data: movies, error } = await supabase
         .from("Movies")
         .insert(movie)
@@ -118,5 +101,16 @@ export default new Vuex.Store({
       commit('resetMovie')
       commit('setStatus', false)
     },
+    async deleteMovieDB({ commit }, id) {
+      const { data, error } = await supabase
+        .from("Movies")
+        .delete()
+        .match({ movie_id: parseInt(id) })
+
+      commit('setStatus', true)
+      commit('resetMovie')
+      this.dispatch("fetchMovies")
+      commit('setStatus', false)
+    }
   }
 })

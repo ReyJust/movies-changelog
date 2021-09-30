@@ -3,12 +3,13 @@
     <div class="title">
       <h2>New Movies</h2>
     </div>
-    <div v-if="!getStatus('newMovies')" class="movie-list">
+    <div v-if="!getStatus" class="movie-list">
       <div v-for="(movie, index) in getNewMovies" :key="index">
         <MovieCard
           :title="movie.title"
           :image="movie.image"
           :year="movie.year"
+          @click="deleteMovie(movie.movie_id)"
         />
       </div>
     </div>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import MovieCard from "./MovieCard.vue";
 
 export default {
@@ -32,7 +33,14 @@ export default {
   computed: {
     ...mapGetters(["getNewMovies", "getStatus"]),
   },
-  methods: {},
+  methods: {
+    ...mapActions(["deleteMovieDB"]),
+
+    deleteMovie(id) {
+      console.log(id);
+      this.deleteMovieDB(id);
+    },
+  },
 };
 </script>
 

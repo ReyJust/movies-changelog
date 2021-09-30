@@ -3,14 +3,13 @@
     <div class="title">
       <h2>Movies</h2>
     </div>
-    <div v-if="!getStatus('movies')" class="movie-list">
+    <div v-if="!getStatus" class="movie-list">
       <div v-for="(movie, index) in getMovies" :key="index">
-        {{ movie }}
         <MovieCard
-          :id="movie.movie_id"
           :title="movie.title"
           :image="movie.image"
           :year="movie.year"
+          @onclick="deleteMovie(movie.movie_id)"
         />
       </div>
     </div>
@@ -36,12 +35,16 @@ export default {
     ...mapGetters(["getMovies", "getStatus"]),
   },
   methods: {
-    ...mapActions(["fetchMovies"]),
+    ...mapActions(["fetchMovies", "deleteMovie"]),
     // callImdb() {
     //   this.$store.dispatch("setMovies");
     // },
     fetchMovies() {
       this.$store.dispatch("fetchMovies");
+    },
+    deleteMovie(id) {
+      console.log(id);
+      //this.deleteMovie(id);
     },
   },
   async mounted() {
