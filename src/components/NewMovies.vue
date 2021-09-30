@@ -29,9 +29,6 @@ export default {
   components: {
     MovieCard,
   },
-  data() {
-    return {};
-  },
 
   computed: {
     ...mapGetters(["getNewMovies", "getStatus"]),
@@ -40,8 +37,10 @@ export default {
     ...mapActions(["deleteMovieDB"]),
 
     deleteMovie(id) {
+      //Delete Movie from the Database
       var confirmation = confirm("Do you want to delete this film?");
       if (confirmation) {
+        //Action
         this.deleteMovieDB(id);
         alert("Deleted!");
       } else {

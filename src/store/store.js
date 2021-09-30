@@ -6,37 +6,43 @@ export default new Vuex.Store({
   namespaced: true,
   state() {
     return {
+      //Loaders
       isSearching: false,
       isLoading: true,
 
+      //Data
       searchedMovie: [],
       movies: [],
       newMovies: [],
-      deletedMovies: [{}],
     }
   },
   getters: {
+    //Data
     getMovies: (state) => state.movies,
     getNewMovies: (state) => state.newMovies,
-
     getSearchedMovie: (state) => state.searchedMovie,
 
+    //Loaders
     getStatus: (state) => state.isLoading,
     getIsSearching: (state) => state.isSearching
   },
   mutations: {
-    //global
+    //reset
+    resetMovie(state) {
+      state.searchedMovie = []
+      state.movies = []
+      state.newMovies = []
+    },
+
+    //Loader
     setStatus(state, status) {
       state.isLoading = status
     },
     setIsSearching(state, status) {
       state.isSearching = status
     },
-    resetMovie(state) {
-      state.searchedMovie = []
-      state.movies = []
-      state.newMovies = []
-    },
+
+    //Mutations - Add Movie
     setSearchMovie(state, response) {
       let movies = []
       let results = response.results
@@ -65,7 +71,7 @@ export default new Vuex.Store({
       }
       state.searchedMovie = movies
     },
-    //Library
+    //Mutation - Library
     setMovieList(state, movies) {
       const oneMonthAgo = new Date();
       oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
@@ -89,25 +95,8 @@ export default new Vuex.Store({
         .select("*")
         .order('added_dt', { ascending: true })
         .limit(20);
+
       commit('setMovieList', movies)
-      commit('setStatus', false)
-    },
-
-    async searchMovie({ commit }, title) {
-      commit('resetMovie')
-      commit('setIsSearching', true)
-      const response = await apicall(title)
-      commit('setSearchMovie', response)
-      commit('setStatus', { item: 'movies', status: false });
-      commit('setIsSearching', false)
-
-    },
-    async setMovieInDb({ commit }, movie) {
-      const { data: movies, error } = await supabase
-        .from("Movies")
-        .insert(movie)
-
-      commit('resetMovie')
       commit('setStatus', false)
     },
     async deleteMovieDB({ commit }, id) {
@@ -121,5 +110,25 @@ export default new Vuex.Store({
       this.dispatch("fetchMovies")
       commit('setStatus', false)
     }
-  }
+  },
+
+  //Add Movie 
+  async searchMovie({ commit }, title) {
+    commit('resetMovie')
+    commit('setIsSearching', true)
+
+    const response = await apicall(title)
+    commit('setSearchMovie', response)
+
+    commit('setStatus', { item: 'movies', status: false });
+    commit('setIsSearching', false)
+  },
+  async setMovieInDb({ commit }, movie) {
+    const { data: movies, error } = await supabase
+      .from("Movies")
+      .insert(movie)
+
+    commit('resetMovie')
+    commit('setStatus', false)
+  },
 })
