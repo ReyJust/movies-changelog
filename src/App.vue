@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="nav">
-      <router-link class="nav-item" to="/">Library</router-link> |
+      <div class="square"></div>
+      <router-link class="nav-item" to="/">Library</router-link>
       <router-link class="nav-item" to="/AddMovie">Add Movie</router-link>
     </div>
     <router-view />
@@ -22,17 +23,44 @@ export default {
 </script>
 
 <style>
+.square {
+  height: 25px;
+  width: 25px;
+  background: rgb(241, 29, 40);
+  background: linear-gradient(
+    124deg,
+    rgba(241, 29, 40, 1) 0%,
+    rgba(254, 97, 44, 1) 78%,
+    rgba(255, 161, 44, 1) 100%
+  );
+  border-radius: 2px;
+  margin: 5px;
+  margin-left: 25px;
+}
+#nav {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  align-items: center;
+}
 .nav-item {
   text-decoration: none;
-  color: #2c3e50;
+  margin-left: 30px;
+  margin-right: 25px;
+  font-size: 25px;
+  color: #ffffff;
 }
 #app {
-  font-family: nunitobold;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: rgb(31, 30, 30);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
 }
 
 .changelog {
@@ -41,7 +69,10 @@ export default {
   width: 20%;
   height: 500px;
   border-radius: 10%;
-  border: 2px solid #2c3e50c5;
+  border: 2px solid #05386b;
+}
+body {
+  margin: 0px;
 }
 
 .title {
@@ -49,16 +80,11 @@ export default {
   font-size: 22px;
   line-height: 5px;
   text-align: left;
-  margin: 5%;
+  margin: 4%;
+  margin-bottom: 1%;
   margin-right: 30%;
   margin-left: 2%;
 }
 
-@font-face {
-  font-family: "nunitobold";
-  src: url("./assets/nunito-bold-webfont.woff2") format("woff2"),
-    url("./assets/nunito-bold-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 </style>

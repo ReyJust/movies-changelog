@@ -9,6 +9,8 @@
           :title="movie.title"
           :image="movie.image"
           :year="movie.year"
+          :actors="movie.actors"
+          :synopsis="movie.synopsis"
           @onclick="deleteMovie(movie.movie_id)"
         />
       </div>
@@ -60,5 +62,6 @@ export default {
   flex-wrap: wrap;
   width: 80%;
   float: left;
+  margin-bottom: 75px;
 }
 </style>

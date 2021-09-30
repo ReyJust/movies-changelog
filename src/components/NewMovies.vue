@@ -9,6 +9,8 @@
           :title="movie.title"
           :image="movie.image"
           :year="movie.year"
+          :actors="movie.actors"
+          :synopsis="movie.synopsis"
           @click="deleteMovie(movie.movie_id)"
         />
       </div>
