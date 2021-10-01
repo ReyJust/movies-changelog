@@ -54,6 +54,7 @@ export default new Vuex.Store({
           //Keep results which are a movie or a serie
           if ((results[movie].titleType === "tvSeries") || (results[movie].titleType === "movie")) {
             movies.push({
+              id: results[movie].id.split('/title/tt1431045/')[2],
               image: (results[movie].image ? results[movie].image.url : 'placeholder'),
               title: results[movie].title,
               year: results[movie].year,

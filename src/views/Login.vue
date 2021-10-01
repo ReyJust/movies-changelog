@@ -51,7 +51,7 @@ export default {
         });
         if (response === true) {
           this.$emit("authenticated", true);
-          this.$router.replace({ name: "Add Movie" });
+          this.$router.replace({ name: "Library" });
         } else {
           this.error = response;
         }

@@ -5,6 +5,7 @@
     </div>
     <div v-if="!getStatus" class="movie-list">
       <div v-for="(movie, index) in getMovies" :key="index">
+        {{ movie.id }}
         <MovieCard
           :title="movie.title"
           :image="movie.image"
