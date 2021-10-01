@@ -1,11 +1,15 @@
 <template>
-  <div>
+  <div id="app">
     <div id="nav">
-      <div class="square"></div>
-      <router-link class="nav-item" to="/">Library</router-link>
-      <router-link class="nav-item" to="/AddMovie">Add Movie</router-link>
+      <div v-if="authenticated">
+        <router-link class="nav-item" to="/">Library</router-link>
+        <router-link class="nav-item" to="/AddMovie">Add Movie</router-link>
+        <router-link class="nav-item" to="/login" v-on:click="logout()" replace
+          >Logout</router-link
+        >
+      </div>
     </div>
-    <router-view />
+    <router-view @authenticated="setAuthenticated" />
   </div>
 </template>
 
@@ -15,9 +19,26 @@ import { mapGetters } from "vuex";
 export default {
   name: "App",
   components: {},
-
+  data() {
+    return {
+      authenticated: false,
+    };
+  },
   computed: {
     ...mapGetters(["getMovies"]),
+  },
+  mounted() {
+    if (!this.authenticated) {
+      this.$router.replace({ name: "login" });
+    }
+  },
+  methods: {
+    setAuthenticated(status) {
+      this.authenticated = status;
+    },
+    logout() {
+      this.authenticated = false;
+    },
   },
 };
 </script>

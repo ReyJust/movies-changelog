@@ -109,26 +109,49 @@ export default new Vuex.Store({
       commit('resetMovie')
       this.dispatch("fetchMovies")
       commit('setStatus', false)
+    },
+    async fetchLogin({ commit }, { username, password }) {
+      let response
+
+      const { data: name, error } = await supabase
+        .from("users")
+        .select("username")
+        .match({ username: username })
+
+      if (!name[0]) {
+        response = "This User doesn't exist."
+      } else if (name[0].username === username) {
+        const { data: pass, error } = await supabase
+          .from("users")
+          .select("password")
+          .match({ password: password })
+
+        if (!pass[0]) {
+          response = "The password is incorrect."
+        } else if (pass[0].password === password) {
+          response = true
+        }
+      }
+      return response
+    },
+    //Add Movie 
+    async searchMovie({ commit }, title) {
+      commit('resetMovie')
+      commit('setIsSearching', true)
+
+      const response = await apicall(title)
+      commit('setSearchMovie', response)
+
+      commit('setStatus', { item: 'movies', status: false });
+      commit('setIsSearching', false)
+    },
+    async setMovieInDb({ commit }, movie) {
+      const { data: movies, error } = await supabase
+        .from("Movies")
+        .insert(movie)
+
+      commit('resetMovie')
+      commit('setStatus', false)
     }
   },
-
-  //Add Movie 
-  async searchMovie({ commit }, title) {
-    commit('resetMovie')
-    commit('setIsSearching', true)
-
-    const response = await apicall(title)
-    commit('setSearchMovie', response)
-
-    commit('setStatus', { item: 'movies', status: false });
-    commit('setIsSearching', false)
-  },
-  async setMovieInDb({ commit }, movie) {
-    const { data: movies, error } = await supabase
-      .from("Movies")
-      .insert(movie)
-
-    commit('resetMovie')
-    commit('setStatus', false)
-  },
-})
+});
