@@ -1,44 +1,39 @@
 <template>
   <div id="app">
     <div id="nav" v-if="authenticated">
-      <div
+      <router-link
         class="nav-container-item"
-        :class="{ itemActive: isActive === 'library' }"
+        :class="{ active: isActive === 'library' }"
+        @click="isActive = 'library'"
+        to="/"
       >
         <div class="nav-item">
-          <router-link
-            :class="{ active: isActive === 'library' }"
-            @click="isActive = 'library'"
-            to="/"
-          >
-            Library</router-link
-          >
+          <div>Library</div>
         </div>
-      </div>
+      </router-link>
 
-      <div
+      <router-link
         class="nav-container-item"
-        :class="{ itemActive: isActive === 'add' }"
+        :class="{ active: isActive === 'add' }"
+        @click="isActive = 'add'"
+        to="/AddMovie"
       >
         <div class="nav-item">
-          <router-link
-            :class="{ active: isActive === 'add' }"
-            @click="isActive = 'add'"
-            to="/AddMovie"
-            >Add Movie</router-link
-          >
+          <div>Add Movie</div>
         </div>
-      </div>
+      </router-link>
 
+      <router-link
+        class="nav-container-item item-red"
+        to="/login"
+        v-on:click="logout()"
+        replace
+      >
+        <div class="nav-item">
+          <div class="red">Logout</div>
+        </div>
+      </router-link>
       <div class="divider"></div>
-
-      <div class="nav-container-item item-red">
-        <div class="nav-item">
-          <router-link class="red" to="/login" v-on:click="logout()" replace
-            >Logout</router-link
-          >
-        </div>
-      </div>
     </div>
     <router-view @authenticated="setAuthenticated" />
   </div>
@@ -52,8 +47,8 @@ export default {
   components: {},
   data() {
     return {
-      isActive: true,
-      authenticated: true,
+      isActive: "library",
+      authenticated: false,
     };
   },
   computed: {
@@ -96,6 +91,10 @@ export default {
   width: 99%;
 }
 .nav-container-item {
+  text-decoration: none;
+  font-size: 25px;
+  color: #2b3951;
+
   /*Layout*/
   min-width: 175px;
   margin: 10px;
@@ -115,28 +114,19 @@ export default {
   border-radius: 5px;
   background-color: #eeeeee;
 }
-.nav-item > * {
-  /*Style*/
-  color: #2b3951;
-  text-decoration: none;
-  font-size: 25px;
-}
+
 /*Active nav item*/
 .active {
-  margin-left: auto;
   color: #745ff2 !important;
-}
-.itemActive {
   background: #745ff2;
 }
 /*Logout*/
 .red {
-  margin-left: auto;
   color: #a33d3d !important;
 }
 .item-red {
   margin-left: auto;
-  margin-right: 0px;
+  margin-right: 10px;
   background: #a33d3d;
 }
 
