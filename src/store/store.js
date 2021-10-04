@@ -145,6 +145,7 @@ export default new Vuex.Store({
 
       commit('setStatus', { item: 'movies', status: false });
       commit('setIsSearching', false)
+      console.log(response)
     },
     async setMovieInDb({ commit }, movie) {
       const { data: movies, error } = await supabase

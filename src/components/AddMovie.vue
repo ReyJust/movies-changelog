@@ -4,27 +4,32 @@
       <h2>Search By Movie Title</h2>
     </div>
     <div class="search">
-      <input
-        v-model="title"
-        type="text"
-        placeholder="Title"
-        id="title"
-        name="Title"
-      />
-      <button :disabled="getIsSearching" @click="callImdb(title)">
-        Search
-      </button>
+      <div class="search-content">
+        <input
+          class="search-input"
+          v-model="title"
+          type="text"
+          placeholder="Title"
+          id="title"
+          name="Title"
+        />
+        <input type="radio" value="Movie" v-model="type" name="movie" /> Movie
+        <input type="radio" value="TvShow" v-model="type" name="movie" /> TvShow
+        <button :disabled="getIsSearching" @click="callImdb(title)">
+          Search
+        </button>
 
-      <bounce-loader
-        class="loader"
-        v-if="getIsSearching"
-        :color="'gray'"
-        :size="'100px'"
-      >
-      </bounce-loader>
+        <bounce-loader
+          class="loader"
+          v-if="getIsSearching"
+          :color="'gray'"
+          :size="'100px'"
+        >
+        </bounce-loader>
+      </div>
     </div>
-    <div v-if="getStatus">
-      <div class="movie-list">
+    <div v-if="getStatus" class="movie-list-border">
+      <div class="movie-list-content">
         <div v-for="(movie, index) in getSearchedMovie" :key="index">
           <SmallMovieCard
             :title="movie.title"
@@ -34,6 +39,7 @@
           />
         </div>
       </div>
+      {{ getSearchedMovie }}
     </div>
   </div>
 </template>
@@ -53,6 +59,7 @@ export default {
   data() {
     return {
       title: "",
+      type: "",
     };
   },
   computed: {
@@ -74,17 +81,15 @@ export default {
 </script>
 
 <style>
-.search {
-  text-align: left;
-}
-input {
+.search-input {
   margin: 3%;
   padding: 0;
   width: 30%;
   border: none;
-  border-bottom: 2px solid #2c3e50c5;
-  color: #2c3e50c5;
+  border-bottom: 2px solid #2b3951;
+  color: #2b3951;
   font-size: 20px;
+  background-color: #eeeeee;
 }
 
 input:focus {
@@ -94,6 +99,7 @@ input:focus {
   margin-left: 50%;
 }
 button {
+  margin: 10px;
   cursor: pointer;
   border: none;
   border-radius: 5%;
@@ -110,5 +116,20 @@ button {
     rgba(254, 97, 44, 1) 78%,
     rgba(255, 161, 44, 1) 100%
   );
+}
+.search {
+  text-align: left;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  background: #dde3ed;
+  box-shadow: -1px -1px 3px #ffffff, 1.5px 1.5px 3px rgba(174, 174, 192, 0.4);
+  border-radius: 12px;
+}
+.search-content {
+  background: #eeeeee;
+  box-shadow: inset -1px -1px 1px rgba(255, 255, 255, 0.7),
+    inset 1px 1px 2px rgba(174, 174, 192, 0.2);
+  border-radius: 12px;
 }
 </style>

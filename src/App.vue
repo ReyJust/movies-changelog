@@ -87,7 +87,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin: 0;
-  height: 80px;
+  height: 100px;
   width: 99%;
 }
 .nav-container-item {
@@ -100,14 +100,16 @@ export default {
   margin: 10px;
   margin-left: 15px;
   margin-right: 45px;
-  padding: 2px;
-  max-height: 30px;
+  padding: 3px;
+  max-height: 45px;
   /*Style*/
   background: #eeeeee;
   box-shadow: -1px -1px 3px #ffffff, 1.5px 1.5px 3px rgba(174, 174, 192, 0.4);
   border-radius: 5px;
 }
 .nav-item {
+  padding-top: 7px;
+  padding-bottom: 7px;
   /*Layout*/
   padding-left: 25px;
   padding-right: 25px;
@@ -125,8 +127,8 @@ export default {
   color: #a33d3d !important;
 }
 .item-red {
-  margin-left: auto;
   margin-right: 10px;
+  margin-left: auto;
   background: #a33d3d;
 }
 
