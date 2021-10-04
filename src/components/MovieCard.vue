@@ -81,9 +81,11 @@ export default {
   opacity: 1;
 }
 .movie-card {
+  line-height: 1;
   width: 300px;
-  height: 500px;
-  margin: 10px;
+  height: 550px;
+  margin-top: 30px;
+  margin: 20px;
   border-radius: 10px;
 
   background-color: #ffffff;

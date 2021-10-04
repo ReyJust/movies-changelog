@@ -3,18 +3,20 @@
     <div class="title">
       <h2>Movies</h2>
     </div>
-    <div v-if="!getStatus" class="movie-list">
-      <div v-for="(movie, index) in getMovies" :key="index">
-        {{ movie.id }}
-        <MovieCard
-          :title="movie.title"
-          :image="movie.image"
-          :year="movie.year"
-          :actors="movie.actors"
-          :synopsis="movie.synopsis"
-          :titleType="movie.titleType"
-          @click="deleteMovie(movie.movie_id)"
-        />
+    <div v-if="!getStatus" class="movie-list-border">
+      <div class="movie-list-content">
+        <div v-for="(movie, index) in getMovies" :key="index">
+          {{ movie.id }}
+          <MovieCard
+            :title="movie.title"
+            :image="movie.image"
+            :year="movie.year"
+            :actors="movie.actors"
+            :synopsis="movie.synopsis"
+            :titleType="movie.titleType"
+            @click="deleteMovie(movie.movie_id)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -63,11 +65,4 @@ export default {
 </script>
 
 <style>
-.movie-list {
-  display: flex;
-  flex-wrap: wrap;
-  width: 80%;
-  float: left;
-  margin-bottom: 75px;
-}
 </style>

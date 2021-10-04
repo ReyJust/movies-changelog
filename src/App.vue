@@ -154,14 +154,14 @@ body {
 }
 
 .title {
-  border-bottom: 2px solid #2c3e50c5;
-  font-size: 22px;
-  line-height: 5px;
-  text-align: left;
-  margin: 4%;
-  margin-bottom: 1%;
-  margin-right: 30%;
-  margin-left: 2%;
+  color: #2b3951;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  background: #f0f0f3;
+  box-shadow: -1px -1px 3px #ffffff, 1.5px 1.5px 3px rgba(174, 174, 192, 0.4);
+  border-radius: 5px;
+  margin: 15px;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
