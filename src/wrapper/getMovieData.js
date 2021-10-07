@@ -1,9 +1,10 @@
 import axios from "axios";
 
-export default async function apiCall(title) {
+
+export default async function getMovieData(id) {
   const options = {
     method: 'GET',
-    url: process.env.VUE_APP_IMDB_API + String(title),
+    url: process.env.VUE_APP_IMDB_MOVIE_DATA + String(id) + '/',
     headers: {
       'x-rapidapi-host': process.env.VUE_APP_RAPID_API_HOST,
       'x-rapidapi-key': process.env.VUE_APP_RAPID_API_KEY
@@ -15,4 +16,3 @@ export default async function apiCall(title) {
   })
   return result
 }
-

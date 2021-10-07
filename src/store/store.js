@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import apicall from '../wrapper/apicall'
+import getMovieId from '../wrapper/getMovieId'
 import { supabase } from "../supabase";
 
 export default new Vuex.Store({
@@ -140,7 +140,7 @@ export default new Vuex.Store({
       commit('resetMovie')
       commit('setIsSearching', true)
 
-      const response = await apicall(title)
+      const response = await getMovieId(title)
       commit('setSearchMovie', response)
 
       commit('setStatus', { item: 'movies', status: false });

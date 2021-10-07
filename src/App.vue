@@ -35,6 +35,7 @@
       </router-link>
       <div class="divider"></div>
     </div>
+    <div id="nav" v-else></div>
     <router-view @authenticated="setAuthenticated" />
   </div>
 </template>
@@ -48,7 +49,7 @@ export default {
   data() {
     return {
       isActive: "library",
-      authenticated: false,
+      authenticated: true,
     };
   },
   computed: {
