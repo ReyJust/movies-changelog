@@ -13,8 +13,8 @@
           id="title"
           name="Title"
         />
-        <input type="radio" value="Movie" v-model="type" name="movie" /> Movie
-        <input type="radio" value="TvShow" v-model="type" name="movie" /> TvShow
+        <input type="radio" value="movie" v-model="type" name="movie" /> Movie
+        <input type="radio" value="serie" v-model="type" name="serie" /> Serie
         <button :disabled="getIsSearching" @click="callImdb(title)">
           Search
         </button>
@@ -39,7 +39,7 @@
           />
         </div>
       </div>
-      {{ getSearchedMovie }}
+      {{ error }}
     </div>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
     return {
       title: "",
       type: "",
+      error: "",
     };
   },
   computed: {
@@ -69,7 +70,12 @@ export default {
     ...mapActions(["searchMovie", "setMovie", "setMovieInDb"]),
 
     callImdb(title) {
-      this.searchMovie(title);
+      if (this.type != "") {
+        this.error = "";
+        this.searchMovie({ title, type: this.type });
+      } else {
+        this.error = "no type selected";
+      }
     },
 
     addMovie(movie) {

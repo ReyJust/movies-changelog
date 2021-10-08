@@ -1,5 +1,10 @@
 import Vuex from 'vuex'
-import getMovieId from '../wrapper/getMovieId'
+import getMovieId from '../wrapper/getMovieId';
+import getMovieData from "../wrapper/getMovieData";
+
+import getSerieId from '../wrapper/getSerieId';
+import getSerieData from "../wrapper/getSerieData";
+
 import { supabase } from "../supabase";
 
 export default new Vuex.Store({
@@ -43,32 +48,28 @@ export default new Vuex.Store({
     },
 
     //Mutations - Add Movie
-    setSearchMovie(state, response) {
+    setSearchMovie(state, results) {
       let movies = []
-      let results = response.results
-      let actors = []
+      let genresList = []
 
       for (let movie in results) {
-        //Keep results which have a title
-        if (results[movie].titleType) {
-          //Keep results which are a movie or a serie
-          if ((results[movie].titleType === "tvSeries") || (results[movie].titleType === "movie")) {
-            movies.push({
-              id: results[movie].id.split('/title/tt1431045/')[2],
-              image: (results[movie].image ? results[movie].image.url : 'placeholder'),
-              title: results[movie].title,
-              year: results[movie].year,
-              titleType: results[movie].titleType,
-            })
-            //Fill the casting
-            let casting = results[movie].principals
-            for (let actor in casting) {
-              actors.push(casting[actor].name)
-            }
-            movies[movies.length - 1]['actors'] = actors
-            actors = []
-          }
+        let movieData = results[movie].Data
+
+        movies.push({
+          id: movieData.imdb_id,
+          image: movieData.image_url,
+          // (movieData.image_url ? results[movie].image : 'placeholder'),
+          title: movieData.title,
+          year: movieData.year,
+          synopsis: movieData.plot,
+        })
+        //Fill the genre
+        let genres = movieData.gen
+        for (let genre in genres) {
+          genresList.push(genres[genre].genre)
         }
+        movies[movies.length - 1]['genres'] = genresList
+        genresList = []
       }
       state.searchedMovie = movies
     },
@@ -136,16 +137,31 @@ export default new Vuex.Store({
       return response
     },
     //Add Movie 
-    async searchMovie({ commit }, title) {
+    async searchMovie({ commit }, { title, type }) {
       commit('resetMovie')
       commit('setIsSearching', true)
+      if (type === 'movie') {
+        const ids = await getMovieId(title)
+        const data = []
+        for (let id in ids) {
+          data.push(await getMovieData(ids[id]))
+        }
+        commit('setSearchMovie', data)
 
-      const response = await getMovieId(title)
-      commit('setSearchMovie', response)
+        commit('setStatus', { item: 'movies', status: false });
+        commit('setIsSearching', false)
+      } else if (type === 'serie') {
+        const ids = await getSerieId(title)
+        console.log(ids)
+        const data = []
+        for (let id in ids) {
+          data.push(await getSerieData(ids[id]))
+        }
+        commit('setSearchMovie', data)
 
-      commit('setStatus', { item: 'movies', status: false });
-      commit('setIsSearching', false)
-      console.log(response)
+        commit('setStatus', { item: 'movies', status: false });
+        commit('setIsSearching', false)
+      }
     },
     async setMovieInDb({ commit }, movie) {
       const { data: movies, error } = await supabase
